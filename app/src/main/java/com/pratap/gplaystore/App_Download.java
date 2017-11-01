@@ -55,7 +55,7 @@ public class App_Download extends IntentService {
         return null;
     }*/
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+
     @Override
     protected void onHandleIntent(Intent intent) {
 
