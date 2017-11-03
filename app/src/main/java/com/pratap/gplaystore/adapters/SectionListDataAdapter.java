@@ -89,9 +89,8 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
 
         Glide.with(mContext)
                 .load(singleItem.getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
                 .centerCrop()
+                .placeholder(R.drawable.android)
                 .error(R.drawable.android)
                 .into(holder.itemImage);
 
