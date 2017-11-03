@@ -9,8 +9,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
 
+import com.pratap.gplaystore.Database.Main_DataBase;
 import com.pratap.gplaystore.Database.Method_DataBase;
 
 import static com.pratap.gplaystore.Logger.logg;
@@ -28,15 +30,27 @@ public class appinstallrcv extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
-        md1 = new Method_DataBase();
+        Main_DataBase md;
+       // md1 = new Method_DataBase();
         String actionStr = intent.getAction();
         try {
-            String packageName = intent.getData().getEncodedSchemeSpecificPart();
-            if (Intent.ACTION_PACKAGE_ADDED.equals(actionStr)) {
+           // String packageName = intent.getData().getEncodedSchemeSpecificPart();
+            md = new Main_DataBase(context);
 
-                Intent intent1 = new Intent(context,App_Download.class);
-                context.startService(intent1);
+            if (Intent.ACTION_PACKAGE_ADDED.equals(actionStr)) {
+                if(md.selectDATA().size() > 0) {
+                    String packageName = intent.getData().getEncodedSchemeSpecificPart();
+                    Bundle x = new Bundle();
+                    x.putString("check","NDB");
+                    intent.putExtras(x);
+                    Intent intent1 = new Intent(context,App_Download.class);
+                    context.startService(intent1);
+                    Log.d("harsh","Install Complete");
+                    md.insertUPDATE_TABLE1("InstallComplete",packageName);
+                }else{
+                    Log.d("harsh","Installing other app");
+                }
+
             Log.d("harsh","BroadCast");
 
             } else if (Intent.ACTION_PACKAGE_FIRST_LAUNCH.equals(actionStr)) {

@@ -9,6 +9,7 @@ public class InstallTable {
     String status;
     String package_name;
     String app_url;
+    String id;
 
     // Empty constructor
     public InstallTable(){
@@ -39,4 +40,13 @@ public class InstallTable {
     public String getApp_url(){
         return app_url;
     }
+
+    public void setid(String id){
+        this.id = id;
+    }
+    public String getid(){
+        return id;
+    }
+
+
 }

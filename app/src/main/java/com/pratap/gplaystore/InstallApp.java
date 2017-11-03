@@ -135,7 +135,7 @@ public class InstallApp {
         int c;
         while ((c = in.read(buffer)) != -1) {
             out.write(buffer, 0, c);
-            logg("installing");
+            //logg("installing");
         }
         session.fsync(out);
         in.close();

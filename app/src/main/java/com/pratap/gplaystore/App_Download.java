@@ -36,22 +36,23 @@ public class App_Download extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-
+        Log.d("harsh", "service start");
         if (intent != null) {
+            Log.d("harsh", "intent found");
             Sr = (String) intent.getSerializableExtra("check");
-            if (Sr.equals("db")) {
-                ArrayList<String> pr = new ArrayList<>();
-                ArrayList<String> Hr = new ArrayList<>();
-                pr = (ArrayList<String>) intent.getSerializableExtra("urlMap");
-                Hr = (ArrayList<String>) intent.getSerializableExtra("urlPack");
-                md = new Main_DataBase(this);
-                for (int i = 0; i < pr.size(); i++) {
-                    md.insertINSTALL_TABLE("", Hr.get(i).toString(), pr.get(i).toString(), "");
-                    Log.d("harsh", "Intent pkg: "+pr.get(i).toString());
-                }
+            md = new Main_DataBase(this);
+            if(Sr != null) {
+                if (Sr.equals("db")) {
+                    ArrayList<String> pr = new ArrayList<>();
+                    ArrayList<String> Hr = new ArrayList<>();
+                    pr = (ArrayList<String>) intent.getSerializableExtra("urlMap");
+                    Hr = (ArrayList<String>) intent.getSerializableExtra("urlPack");
+                    for (int i = 0; i < pr.size(); i++) {
+                        md.insertINSTALL_TABLE("", Hr.get(i).toString(), pr.get(i).toString(), "");
+                        Log.d("harsh", "Intent pkg: " + pr.get(i).toString());
+                    }
 
-            } else {
-                Log.d("harsh", "onHandleIntent:Null hai intent ");
+                }
             }
 
             try {
@@ -82,7 +83,7 @@ public class App_Download extends IntentService {
                     Log.d("harsh", loc);
 
                     // Added loc in table.
-                    md.insertUPDATE_TABLE1(loc,pkg);
+                  //  md.insertUPDATE_TABLE1(loc,pkg);
 
                     if (ap.install(loc, pkg)) {
 
@@ -102,7 +103,8 @@ public class App_Download extends IntentService {
 
             return;
         }
-
+        Log.d("harsh", "service stop");
+stopSelf();
 
     }
 

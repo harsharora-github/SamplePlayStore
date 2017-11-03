@@ -219,19 +219,20 @@ public class Main_DataBase extends SQLiteOpenHelper {
 
         db = this.getReadableDatabase();
 
-        Cursor c = db.rawQuery("select status, package_name, app_url from InstallTABLE WHERE status is null or status = '' limit 1" , null);
+        Cursor c = db.rawQuery("select id, status, package_name, app_url from InstallTABLE WHERE status is null or status = '' limit 1" , null);
 
         ArrayList<String> mArrayList = new ArrayList<String>();
         ArrayList<InstallTable> mArrayList1 = new ArrayList<InstallTable>();
         InstallTable ins = new InstallTable();
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
-
+            ins.setid(c.getString(c.getColumnIndex(COLUMN_ID)));
             ins.setPackage_name(c.getString(c.getColumnIndex(PACKAGE_NAME)));
             ins.setStatus(c.getString(c.getColumnIndex(STATUS)));
             ins.setApp_url(c.getString(c.getColumnIndex(APP_URL)));
             mArrayList1.add(ins);
         }
         c.close();
+        db.close();
         return mArrayList1;
     }
 }
