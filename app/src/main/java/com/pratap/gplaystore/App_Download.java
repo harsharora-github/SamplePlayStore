@@ -4,11 +4,18 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+
 import android.util.Log;
 
+import com.pratap.gplaystore.Database.InstallTable;
+import com.pratap.gplaystore.Database.Main_DataBase;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
+
+import static com.pratap.gplaystore.adapters.SectionListDataAdapter.pack_name;
+import static com.pratap.gplaystore.adapters.SectionListDataAdapter.urlList;
 
 /**
  * Created by harsh.arora on 4/11/2017.
@@ -18,72 +25,73 @@ public class App_Download extends IntentService {
 
     InstallApp ap;
     Context context;
-
-   // HashMap<Integer,String> pr = new HashMap<>();
+    Main_DataBase md;
+    String Sr;
+    // HashMap<Integer,String> pr = new HashMap<>();
 
     public App_Download() {
 
         super("App_Download");
     }
 
-
-
-    /*@Override
-    protected String doInBackground(HashMap... param) {
-        HashMap<Integer,String> pr = param[0];
-        Log.d("harsh", "doInBackground:prsize: "+pr.size());
-        // for(int i=0;i<pr.size();i++) {
-        for(Integer entry : pr.keySet()) {
-            Log.d("harsh", "doInBackground:lost: "+entry);
-            try {
-                Download dl = new Download();
-                if (dl.DownloadFiles(pr.get(entry).toString())) {
-                    Log.d("harsh", "doInBackground: dlcomp");
-                } else {
-                    Log.d("harsh", "doInBackground: LOL");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            Log.d("harsh", "doInBackground: Loop:"+(entry +1));
-            try {
-                TimeUnit.SECONDS.sleep(5);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }*/
-
-
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        HashMap<Integer,String> pr = new HashMap<>();
         if (intent != null) {
-            pr = (HashMap<Integer, String>) intent.getExtras().get("urlMap");
-        }
-        else{
-            Log.d("harsh", "onHandleIntent:Null hai intent ");
-        }
-        Log.d("harsh", "doInBackground:prsize: "+pr.size());
-        // for(int i=0;i<pr.size();i++) {
-        for(Integer entry : pr.keySet()) {
-            Log.d("harsh", "doInBackground:lost: "+entry);
+            Sr = (String) intent.getSerializableExtra("check");
+            if (Sr.equals("db")) {
+                ArrayList<String> pr = new ArrayList<>();
+                ArrayList<String> Hr = new ArrayList<>();
+                pr = (ArrayList<String>) intent.getSerializableExtra("urlMap");
+                Hr = (ArrayList<String>) intent.getSerializableExtra("urlPack");
+                md = new Main_DataBase(this);
+                for (int i = 0; i < pr.size(); i++) {
+                    md.insertINSTALL_TABLE("", Hr.get(i).toString(), pr.get(i).toString(), "");
+                    Log.d("harsh", "Intent pkg: "+pr.get(i).toString());
+                }
+
+            } else {
+                Log.d("harsh", "onHandleIntent:Null hai intent ");
+            }
+
             try {
+                String pkg = "";
+                for(int x = 0; x < md.selectDATA().size();x++ ) {
+                    pkg = md.selectDATA().get(x).getPackage_name().toString();
+                    Log.d("harsh","pkg:"+x+"-"+ pkg);
+                }
+
+
+                ArrayList<InstallTable> data = new ArrayList<InstallTable>();
+                       data =  md.selectDATA();
+                String getLink = data.get(0).getApp_url().toString();
                 Download dl = new Download();
-                String loc = dl.DownloadFiles(pr.get(entry).toString());
+                Log.d("harsh", "link:URL "+ getLink);
+                String loc = dl.DownloadFiles(getLink);
+                Log.d("harsh", "Location:"+loc);
+                // Change status coulmn in Table
+                md.insertUPDATE_TABLE1("Downloading",pkg);
+                Log.d("harsh", "pkg:"+pkg);
                 if (!loc.equals("")) {
-                    Log.d("harsh", "doInBackground: dlcomp");
+                    Log.d("harsh", "dlcomplete");
+                    // Updating Location in DataBase
+                    md.insertINSTALL_TABLE2(loc,pkg);
+                    // Change status column in Table
+                    md.insertUPDATE_TABLE1("Downloaded",pkg);
                     ap = new InstallApp(this);
                     Log.d("harsh", loc);
-                    if(ap.install(loc,"")) {
+
+                    // Added loc in table.
+                    md.insertUPDATE_TABLE1(loc,pkg);
+
+                    if (ap.install(loc, pkg)) {
+
+                        md.insertUPDATE_TABLE1("InstallStart",pkg);
                         Log.d("harsh", "install done");
-                    }else{
+                    } else {
                         Log.e("harsh", "install fail");
                     }
-                  //  dl.deleteDir();
-                 //   Log.d("harsh", "directory deleted");
+
 
                 } else {
                     Log.d("harsh", "doInBackground: LOL");
@@ -91,15 +99,11 @@ public class App_Download extends IntentService {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            Log.d("harsh", "doInBackground: Loop:"+(entry +1));
-            try {
-                TimeUnit.SECONDS.sleep(5);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
 
+            return;
         }
-        return ;
+
+
     }
 
 

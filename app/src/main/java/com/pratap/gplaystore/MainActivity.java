@@ -1,5 +1,6 @@
 package com.pratap.gplaystore;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +8,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.pratap.gplaystore.Database.Main_DataBase;
 import com.pratap.gplaystore.adapters.RecyclerViewDataAdapter;
 import com.pratap.gplaystore.models.SectionDataModel;
 import com.pratap.gplaystore.models.SingleItemModel;
@@ -20,6 +25,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import static com.pratap.gplaystore.adapters.SectionListDataAdapter.pack_name;
+import static com.pratap.gplaystore.adapters.SectionListDataAdapter.urlList;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
     String app_url = null;
     String app_package = null;
     String dataa = null;
-    Bitmap image;
+    String DB = "db";
+
+
     ArrayList<String> data = new ArrayList<>();
     ArrayList<String> data1 = new ArrayList<>();
     ArrayList<String> data2 = new ArrayList<>();
@@ -56,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             toolbar.setTitle("G PlayStore");
 
         }
+
 
   /*      try {
             data= new  Length_Fetch().execute().get();
@@ -109,6 +120,40 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.install) {
+
+            Toast.makeText(getApplicationContext(), "This will install the selected Application ", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(MainActivity.this,App_Download.class);
+
+            Bundle x = new Bundle();
+
+            x.putStringArrayList("urlMap",urlList);
+            x.putStringArrayList("urlPack", pack_name);
+            x.putString("check",DB);
+            intent.putExtras(x);
+            startService(intent);
+
+            return true;
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
     public void createDummyData() {
         ArrayList<SingleItemModel> singleItem = null;
         SectionDataModel dm = null;
@@ -130,12 +175,12 @@ public class MainActivity extends AppCompatActivity {
                 app_package = dataarr[3];
                if (topic != null) {
                    Log.d("harsh", "topic!null: "+app_name);
-                    singleItem.add(new SingleItemModel(app_name,image_url));
+                    singleItem.add(new SingleItemModel(app_name,image_url,app_url,app_package));
                     dm.setAllItemsInSection(singleItem);
                     allSampleData.add(dm);
                 }else {
                    Log.d("harsh", "topic-null: "+app_name);
-                   singleItem.add(new SingleItemModel(app_name, image_url));
+                   singleItem.add(new SingleItemModel(app_name, image_url,app_url,app_package));
                }
 
             }else{
@@ -147,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                 app_url = dataarr[2];
                 app_package = dataarr[3];
                 if(singleItem != null) {
-                    singleItem.add(new SingleItemModel(app_name, image_url));
+                    singleItem.add(new SingleItemModel(app_name, image_url,app_url,app_package));
                 }
                 /*
                 if(i == data3.size()-1){

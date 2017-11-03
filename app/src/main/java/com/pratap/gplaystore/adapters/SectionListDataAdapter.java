@@ -8,9 +8,13 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
+import android.util.ArrayMap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +26,7 @@ import com.pratap.gplaystore.R;
 import com.pratap.gplaystore.models.SingleItemModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static com.pratap.gplaystore.R.id.image;
 import static com.pratap.gplaystore.R.id.itemImage;
@@ -30,7 +35,29 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
 
     private ArrayList<SingleItemModel> itemsList;
 
+   public static ArrayList urlList;
+    public static ArrayList pack_name;
+
     private Context mContext;
+
+
+    public void Add_to_list(String a){
+
+        urlList.add(a);
+    }
+
+    public void Remove_from_list(String a){
+        urlList.remove(a);
+    }
+
+    public void Add_to_list1(String a){
+
+        pack_name.add(a);
+    }
+
+    public void Remove_from_list1(String a){
+        pack_name.remove(a);
+    }
 
     public SectionListDataAdapter(Context context, ArrayList<SingleItemModel> itemsList) {
         this.itemsList = itemsList;
@@ -47,13 +74,17 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
     }
 
     @Override
-    public void onBindViewHolder(SingleItemRowHolder holder, int i) {
+    public void onBindViewHolder(final SingleItemRowHolder holder, int i) {
 
-        SingleItemModel singleItem = itemsList.get(i);
+        final SingleItemModel singleItem = itemsList.get(i);
 
         holder.tvTitle.setText(singleItem.getName());
 
-    //    SingleItemModel singleItem1 = itemsList.get(i);
+        urlList = new ArrayList<>();
+        pack_name = new ArrayList<>();
+
+
+        //    SingleItemModel singleItem1 = itemsList.get(i);
       //  holder.itemImage.setImageBitmap(singleItem.getImage());
 
         Glide.with(mContext)
@@ -63,6 +94,41 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
                 .centerCrop()
                 .error(R.drawable.android)
                 .into(holder.itemImage);
+
+
+        holder.itemImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(v.getContext(), "This will show App description ", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        holder.itemcheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(isChecked) {
+                    Add_to_list( singleItem.getAppURL());
+                    Add_to_list1( singleItem.getAppPackage());
+                    Toast.makeText(buttonView.getContext(), "Size of urlList" + urlList.size(), Toast.LENGTH_SHORT).show();
+                    Log.d("harsha", "Size of urlList" + urlList.toString());
+                 //   Log.d("harsha", "Size of urlList" + urlList.get(1).toString());
+                    Log.d("harsha", "Size of urlList" + pack_name.toString());
+                }
+
+                else{
+                    Remove_from_list(singleItem.getAppURL());
+                    Remove_from_list1(singleItem.getAppPackage());
+                    Toast.makeText(buttonView.getContext(), "Size of urlList" + urlList.size(), Toast.LENGTH_SHORT).show();
+                    Log.d("harsha", "Size of urlList" + urlList.toString());
+                    Log.d("harsha", "Size of urlList" + pack_name.toString());
+                }
+
+
+            }
+        });
+
     }
 
     @Override
@@ -76,12 +142,15 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
 
         protected ImageView itemImage;
 
+        protected  CheckBox itemcheckbox;
+
 
         public SingleItemRowHolder(View view) {
             super(view);
 
             this.tvTitle = (TextView) view.findViewById(R.id.tvTitle);
             this.itemImage = (ImageView) view.findViewById(R.id.itemImage);
+            this.itemcheckbox = (CheckBox)view.findViewById(R.id.checkboxx);
            //this.itemImage= new ImageDownloader((ImageView) view.findViewById(R.id.itemImage)).execute("http://192.168.43.166/face.png");
 
 
@@ -89,9 +158,15 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
                 @Override
                 public void onClick(View v) {
 
+                    switch (v.getId()) {
 
-                    Toast.makeText(v.getContext(), tvTitle.getText(), Toast.LENGTH_SHORT).show();
+                        case R.id.itemImage:
+                            Toast.makeText(v.getContext(), "This will show App description ", Toast.LENGTH_SHORT).show();
+                            break;
+                        case R.id.checkboxx:
 
+
+                    }
                 }
             });
 

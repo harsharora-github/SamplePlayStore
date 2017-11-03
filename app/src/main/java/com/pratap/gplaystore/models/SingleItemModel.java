@@ -11,7 +11,8 @@ public class SingleItemModel {
     private String name;
     private String image_url;
     private String description;
-    private Bitmap image;
+    private String app_url;
+    private String app_package;
 
 
 
@@ -19,9 +20,11 @@ public class SingleItemModel {
     public SingleItemModel() {
     }
 
-    public SingleItemModel(String name, String image_url) {
+    public SingleItemModel(String name, String image_url, String app_url,String app_package) {
         this.name = name;
         this.image_url = image_url;
+        this.app_url=app_url;
+        this.app_package=app_package;
     }
 
 
@@ -52,12 +55,20 @@ public class SingleItemModel {
         this.description = description;
     }
 
-    public Bitmap getImage() {
-        return image;
+    public String getAppURL() {
+        return app_url;
     }
 
-    public void setImage(Bitmap image) {
-        this.image = image;
+    public void setAppURL(String app_url) {
+        this.app_url = app_url;
+    }
+
+    public  String getAppPackage(){
+        return app_package;
+    }
+
+    public void setApp_package(String app_package){
+        this.app_package = app_package;
     }
 
 }

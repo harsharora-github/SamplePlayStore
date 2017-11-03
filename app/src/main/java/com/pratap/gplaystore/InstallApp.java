@@ -38,7 +38,7 @@ public class InstallApp {
 
 
     public boolean install(String loc, String pkg) {
-        pkg = "com.cpuid.cpu_z";
+       // pkg = "com.cpuid.cpu_z";
         logg("Package:- " + pkg);
 
         if (!pkg.isEmpty()) {
@@ -124,9 +124,9 @@ public class InstallApp {
         logg(packageName);
         params.setReferrerUri(Uri.parse(Intent.EXTRA_REFERRER));
         params.setOriginatingUri(Uri.parse(Intent.EXTRA_ORIGINATING_URI));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            params.setOriginatingUid(1000);
-        }
+      //  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+     //       params.setOriginatingUid(1000);
+    //    }
         // set params
         int sessionId = packageInstaller.createSession(params);
         PackageInstaller.Session session = packageInstaller.openSession(sessionId);

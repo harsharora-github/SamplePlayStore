@@ -20,6 +20,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".App_Download"
+            android:exported="false">
+        </service>
+
+        <receiver
+            android:name=".appinstallrcv"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <action android:name="android.intent.action.PACKAGE_FIRST_LAUNCH" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+
+
     </application>
 
 </manifest>
