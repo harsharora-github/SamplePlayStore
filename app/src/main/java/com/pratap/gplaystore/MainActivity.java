@@ -68,33 +68,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-  /*      try {
-            data= new  Length_Fetch().execute().get();
-            Log.d("harsh", "onCreate: "+data);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
 
-        try {
-            data1= new  Headers_Fetch().execute().get();
-            Log.d("harsh", "onCreate: "+data1);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
 
-        try {
-            data2= new  AppsName_Fetch().execute().get();
-            Log.d("harsh", "onCreate: "+data2);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-*/
         try {
             data3= new  Json_Fetch().execute().get();
             Log.d("harsh", "onCreate: "+data3.size());
@@ -105,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         createDummyData();
-
 
         RecyclerView my_recycler_view = (RecyclerView) findViewById(R.id.my_recycler_view);
 
@@ -210,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+
 
     }
 

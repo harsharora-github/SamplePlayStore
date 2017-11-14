@@ -121,12 +121,12 @@ public class Main_DataBase extends SQLiteOpenHelper {
         if (checkTable(INSTALL_TABLE)) {
             SQLiteDatabase db;
             db = this.getWritableDatabase();
-            Log.d("harsh","UpdateStatus;"+status);
+            Log.d("harsh","UpdateStatus:"+status);
             try {
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(STATUS, status);
                int x =  db.update(INSTALL_TABLE, contentValues, PACKAGE_NAME + "='"+pkg+"'",null);
-               Log.d("harsh","UpdateCount;"+String.valueOf(x));
+               Log.d("harsh","UpdateCount:"+String.valueOf(x));
 
             } catch (SQLiteException e) {
                 e.printStackTrace();

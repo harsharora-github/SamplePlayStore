@@ -37,6 +37,9 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
 
    public static ArrayList urlList;
     public static ArrayList pack_name;
+    public static ArrayList imageList;
+    public static ArrayList nameList;
+
 
     private Context mContext;
 
@@ -58,6 +61,25 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
     public void Remove_from_list1(String a){
         pack_name.remove(a);
     }
+
+// APPS images to be Downloaded will be add in the list to show in last activity
+    public void Add_to_list_image(String a) {
+
+        imageList.add(a);
+    }
+    public void Remove_from_list_image(String a){
+        imageList.remove(a);
+    }
+
+    // APPS name to be Downloaded will be add in the list to show in last activity
+    public void Add_to_list_name(String a) {
+
+        nameList.add(a);
+    }
+    public void Remove_from_list_name(String a){
+        nameList.remove(a);
+    }
+
 
     public SectionListDataAdapter(Context context, ArrayList<SingleItemModel> itemsList) {
         this.itemsList = itemsList;
@@ -82,6 +104,10 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
 
         urlList = new ArrayList<>();
         pack_name = new ArrayList<>();
+        imageList = new ArrayList<>();
+        nameList = new ArrayList<>();
+
+
 
 
         //    SingleItemModel singleItem1 = itemsList.get(i);
@@ -110,6 +136,9 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
                 if(isChecked) {
                     Add_to_list( singleItem.getAppURL());
                     Add_to_list1( singleItem.getAppPackage());
+                    Add_to_list_image(singleItem.getUrl());
+                    Add_to_list_name(singleItem.getName());
+
                     Toast.makeText(buttonView.getContext(), "Size of urlList" + urlList.size(), Toast.LENGTH_SHORT).show();
                     Log.d("harsha", "Size of urlList" + urlList.toString());
                  //   Log.d("harsha", "Size of urlList" + urlList.get(1).toString());
@@ -119,9 +148,13 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
                 else{
                     Remove_from_list(singleItem.getAppURL());
                     Remove_from_list1(singleItem.getAppPackage());
+                    Remove_from_list_image(singleItem.getUrl());
+                    Remove_from_list_name(singleItem.getName());
+
                     Toast.makeText(buttonView.getContext(), "Size of urlList" + urlList.size(), Toast.LENGTH_SHORT).show();
                     Log.d("harsha", "Size of urlList" + urlList.toString());
-                    Log.d("harsha", "Size of urlList" + pack_name.toString());
+                    Log.d("harsha", "Size of pack_name" + pack_name.toString());
+                    Log.d("harsha", "Size of imageList" + imageList.toString());
                 }
 
 

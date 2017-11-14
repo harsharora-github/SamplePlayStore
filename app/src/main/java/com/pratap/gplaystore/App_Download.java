@@ -38,6 +38,10 @@ public class App_Download extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.d("harsh", "service start");
         if (intent != null) {
+
+            Intent inten = new Intent(App_Download.this,Downloading.class);
+            startActivity(inten);
+
             Log.d("harsh", "intent found");
             Sr = (String) intent.getSerializableExtra("check");
             md = new Main_DataBase(this);
