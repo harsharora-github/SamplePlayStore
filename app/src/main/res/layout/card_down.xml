@@ -20,12 +20,12 @@
 
         <ImageView
             android:id="@+id/downImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center_horizontal"
             android:scaleType="fitCenter"
             android:src="@drawable/android"
-            android:layout_weight="5"
+
             />
 
 
@@ -38,8 +38,8 @@
             android:padding="5dp"
             android:text="Sample title"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:layout_weight="1"/>
+            android:textSize="12sp"
+            />
 
 
 
@@ -59,7 +59,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="installing.."/>
+                android:text="installing.."
+                android:id="@+id/ins"/>
 
 
         </LinearLayout>
@@ -70,6 +71,7 @@
             android:visibility="invisible"
             android:text="Open"
             android:id="@+id/openbutton"
+            android:shadowColor="@color/colorButton"
             />
 
 

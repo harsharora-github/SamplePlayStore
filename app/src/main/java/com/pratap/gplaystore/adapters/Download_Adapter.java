@@ -47,7 +47,7 @@ public class Download_Adapter extends RecyclerView.Adapter<Download_Adapter.down
 
     public static class downholder extends RecyclerView.ViewHolder {
         public CardView mCardView;
-        TextView down_title;
+        TextView down_title,Installl;
         ImageView img_down;
         Button openbutton;
         ProgressBar prog;
@@ -59,6 +59,8 @@ public class Download_Adapter extends RecyclerView.Adapter<Download_Adapter.down
             this.img_down = (ImageView) v.findViewById(R.id.downImage);
             this.openbutton = (Button) v.findViewById(R.id.openbutton);
             this.prog = (ProgressBar) v.findViewById(R.id.prog);
+            this.Installl = (TextView)v.findViewById(R.id.ins);
+
         }
     }
 
@@ -87,6 +89,7 @@ if(pack_name != null) {
     if (openApp(context, pack_name.get(i).toString())) {
         holder.openbutton.setVisibility(View.VISIBLE);
         holder.prog.setVisibility(View.INVISIBLE);
+        holder.Installl.setVisibility(View.INVISIBLE);
     }
 }
 
