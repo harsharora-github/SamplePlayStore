@@ -22,5 +22,6 @@
     <color name="teal_a200">#64ffda</color> <!-- Use with black text -->
     <color name="teal_a400">#1de9b6</color> <!-- Use with black text -->
     <color name="teal_a700">#00bfa5</color> <!-- Use with black text -->
+    <color name="color1">#ffffff</color>
 
 </resources>

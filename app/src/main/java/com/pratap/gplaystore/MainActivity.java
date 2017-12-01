@@ -42,9 +42,7 @@ public class MainActivity extends AppCompatActivity {
     String DB = "db";
 
 
-    ArrayList<String> data = new ArrayList<>();
-    ArrayList<String> data1 = new ArrayList<>();
-    ArrayList<String> data2 = new ArrayList<>();
+
     ArrayList<String> data3 = new ArrayList<>();
 
 

@@ -5,6 +5,7 @@ package com.pratap.gplaystore.adapters;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pratap.gplaystore.MainActivity;
+import com.pratap.gplaystore.More_Activity;
 import com.pratap.gplaystore.R;
 import com.pratap.gplaystore.models.SectionDataModel;
 
@@ -56,34 +59,16 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
          itemRowHolder.recycler_view_list.setNestedScrollingEnabled(false);
 
 
-       /*  itemRowHolder.recycler_view_list.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int action = event.getAction();
-                switch (action) {
-                    case MotionEvent.ACTION_DOWN:
-                        // Disallow ScrollView to intercept touch events.
-                        v.getParent().requestDisallowInterceptTouchEvent(true);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        //Allow ScrollView to intercept touch events once again.
-                        v.getParent().requestDisallowInterceptTouchEvent(false);
-                        break;
-                }
-                // Handle RecyclerView touch events.
-                v.onTouchEvent(event);
-                return true;
-            }
-        });*/
+
 
         itemRowHolder.btnMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                Intent i = new Intent(mContext,More_Activity.class);
+                mContext.startActivity(i);
 
-                Toast.makeText(v.getContext(), "More Functionality is not Implemented yet "+sectionName , Toast.LENGTH_SHORT).show();
-
-
+                Toast.makeText(v.getContext(), "More Applications "+sectionName , Toast.LENGTH_SHORT).show();
 
             }
         });
